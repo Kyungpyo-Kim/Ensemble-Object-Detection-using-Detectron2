@@ -1,0 +1,13 @@
+--extra-index-url https://download.pytorch.org/whl/cu113
+torch==1.10
+torchvision
+torchaudio
+scipy
+jupyterlab
+pandas
+tqdm
+ipykernel
+ipywidgets
+opencv-python
+pyyaml==5.1
+git+https://github.com/facebookresearch/detectron2@v0.6#egg=detectron2
