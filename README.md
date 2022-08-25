@@ -1,6 +1,7 @@
 # Ensemble-Object-Detection-using-Detectron2
 Ensemble Object Detection Algorithm using Detectron2
 
+
 ## Getting Started
 1. Environments
     * OS: Ubuntu20.04
@@ -19,11 +20,14 @@ Ensemble Object Detection Algorithm using Detectron2
     python -m pip install "git+https://github.com/facebookresearch/detectron2@v0.6"
     ```
 
-3. Run
-    open "detectron2_ensemble.ipynb" and run all cells
+3. Run (reproduce results)
+    * open "detectron2_ensemble.ipynb" and run all cells
+    * if you don't have GPU, you can utilize results json files without GPU running.
+    * [Google Colab](https://colab.research.google.com/drive/1lQQzE4ELRo6Dh47AaH27vmKe0Nomiu8t?usp=sharing )
 
 
 ## Reference
 * [Detectron2](https://github.com/facebookresearch/detectron2)
 * [Detectron2 Install](https://detectron2.readthedocs.io/en/latest/tutorials/install.html)
 * [COCO Dataset](https://cocodataset.org)
+* [Weighted Boxes Fusion](https://arxiv.org/pdf/1910.13302.pdf)
