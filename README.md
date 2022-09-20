@@ -4,12 +4,17 @@ Ensemble Object Detection Algorithm using Detectron2
 
 ## Result
 
-| Models                      | Box AP @(IoU=0.50:0.95, area=all, maxDets=100) |
+| Models                   | Box AP @(IoU=0.50:0.95, area=all, maxDets=100) |
 |-----------------------------|------|
 |faster_rcnn_R_50_C4_1x.yaml  | 0.357|
+|faster_rcnn_R_50_C4_3x.yaml  | 0.384|
 |faster_rcnn_R_50_DC5_1x.yaml | 0.373|
+|faster_rcnn_R_50_FPN_1x.yaml | 0.379|
 |retinanet_R_50_FPN_1x.yaml   | 0.374|
-|__Ensemble Model__           | __*0.403 (+0.029)*__|
+|retinanet_R_50_FPN_3x.yaml   | 0.387|
+|__Ensemble Model__   | __*0.425 (+0.038)*__|
+
+
 
 ## Getting Started
 
@@ -35,7 +40,6 @@ Ensemble Object Detection Algorithm using Detectron2
     - open "detectron2_ensemble.ipynb" and run all cells
     - if you don't have GPU, you can utilize results json files without GPU running.
         - open "detectron2_ensemble_no_gpu.ipynb" and run all cells
-    - [Google Colab](https://colab.research.google.com/drive/1lQQzE4ELRo6Dh47AaH27vmKe0Nomiu8t?usp=sharing )
 
 ## Explanation
 
@@ -49,15 +53,18 @@ Ensemble Object Detection Algorithm using Detectron2
     | MMDetection | 61 |
     | Detectron | 19 |
 
-- Ensemble을 통해 Box mAP를 높이는 것을 목적으로 하고, mAP 상승 gap 을 최대로 하는 것을 목적으로 했기 때문에, Pre-trained Model 중 Box mAP 가 낮은 모델을 선정하였으며, COCO Dataset Evaluation 이 정상적으로 수행되지 않은 *Fast R-CNN R50-FPN* 모델은 제외 하였다.
+- Ensemble을 통해 Box mAP를 높이는 것을 목적으로 하고, mAP 상승 gap 을 최대로 하는 것을 목적으로 했기 때문에, Pre-trained Model 중 Box mAP 가 낮은 모델을 위주로 선정하였으며, COCO Dataset Evaluation 이 정상적으로 수행되지 않은 *Fast R-CNN R50-FPN* 모델은 제외 하였다.
   - 선정 모델 (configuration name)
-    - [faster_rcnn_R_50_C4_1x.yaml](https://github.com/facebookresearch/detectron2/blob/d1e04565d3bec8719335b88be9e9b961bf3ec464/configs/COCO-Detection/faster_rcnn_R_50_C4_1x.yaml)
-    - [faster_rcnn_R_50_DC5_1x.yaml](https://github.com/facebookresearch/detectron2/blob/d1e04565d3bec8719335b88be9e9b961bf3ec464/configs/COCO-Detection/faster_rcnn_R_50_DC5_1x.yaml)
-    - [retinanet_R_50_FPN_1x.yaml](https://github.com/facebookresearch/detectron2/blob/d1e04565d3bec8719335b88be9e9b961bf3ec464/configs/COCO-Detection/retinanet_R_50_FPN_1x.yaml)
+    - faster_rcnn_R_50_C4_1x.yaml
+    - faster_rcnn_R_50_C4_3x.yaml
+    - faster_rcnn_R_50_DC5_1x.yaml
+    - faster_rcnn_R_50_FPN_1x.yaml
+    - retinanet_R_50_FPN_1x.yaml
+    - retinanet_R_50_FPN_3x.yaml
 
 ### Ensemble Method
 
-Object detection 분야에서 많이 쓰이고 성능이 검증된 **Weighted Boxes Fusion** 방식을 사용하여 ensemble 을 적용하였고, `0.374`에서 `0.403`으로 `0.029` 증가한 결과를 얻을 수 있었다.
+Object detection 분야에서 많이 쓰이고 성능이 검증된 **Weighted Boxes Fusion** 방식을 사용하여 ensemble 을 적용하였고, `0.387`에서 `0.425`으로 `0.038` 증가한 결과를 얻을 수 있었다.
 
 시작은 ensemble을 위해서 기본적으로 voting 방식을 취하기 위해 hueristic 한 method를 설계해보려고 시도하였다. 하지만 아래 그림과 같이 score (confidence) 대비 over-detection 되는 object들이 너무 많았고, 이러한 여러개의 모델들에서 더 높은 정확도를 가지는 box를 찾아내기가 쉽지 않았다.
 
