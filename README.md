@@ -45,16 +45,13 @@ Ensemble Object Detection Algorithm using Detectron2
 
 ### Model Selection
 
-- 모델 선택은 빠른 테스트 싸이클을 구축하여 더 많은 테스트를 해볼 수 있도록, [speed benchmark](https://mmdetection.readthedocs.io/en/latest/model_zoo.html) 기준으로 속도가 빠른 __Detectron2__를 선정하였다.
+| Implementation | Throughpu (img/s) |
+| --- | --- |
+| __Detectron2 (used)__ | __62__ |
+| MMDetection | 61 |
+| Detectron | 19 |
 
-    | Implementation | Throughpu (img/s) |
-    | --- | --- |
-    | __Detectron2__ | __62__ |
-    | MMDetection | 61 |
-    | Detectron | 19 |
-
-- Ensemble을 통해 Box mAP를 높이는 것을 목적으로 하고, mAP 상승 gap 을 최대로 하는 것을 목적으로 했기 때문에, Pre-trained Model 중 Box mAP 가 낮은 모델을 위주로 선정하였으며, COCO Dataset Evaluation 이 정상적으로 수행되지 않은 *Fast R-CNN R50-FPN* 모델은 제외 하였다.
-  - 선정 모델 (configuration name)
+  - Used Configuration (model) Name
     - faster_rcnn_R_50_C4_1x.yaml
     - faster_rcnn_R_50_C4_3x.yaml
     - faster_rcnn_R_50_DC5_1x.yaml
@@ -66,7 +63,7 @@ Ensemble Object Detection Algorithm using Detectron2
 
 Object detection 분야에서 많이 쓰이고 성능이 검증된 **Weighted Boxes Fusion** 방식을 사용하여 ensemble 을 적용하였고, `0.387`에서 `0.425`으로 `0.038` 증가한 결과를 얻을 수 있었다.
 
-시작은 ensemble을 위해서 기본적으로 voting 방식을 취하기 위해 hueristic 한 method를 설계해보려고 시도하였다. 하지만 아래 그림과 같이 score (confidence) 대비 over-detection 되는 object들이 너무 많았고, 이러한 여러개의 모델들에서 더 높은 정확도를 가지는 box를 찾아내기가 쉽지 않았다.
+시작은 ensemble을 위해서 기본적으로 voting 방식을 취하기 위해 hueristic 한 method 는 아래 그림과 같이 score (confidence) 대비 over-detection 되는 object들이 너무 많았고, 이러한 여러개의 모델들에서 더 높은 정확도를 가지는 box를 찾아내기가 쉽지 않았다.
 
 ![over-detection](./img/image1.png)
 
